@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-encabezado.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Formulario de Cita Navideña</title>
+
+    <style>
+      .desactivado {
+        background-color: gray !important;
+        color: rgb(255, 255, 255) !important;
+        transform: scale(0) ;
+        transition: transform 0.3s ease ;
+       }
+
+
+    </style>
+    <script>
+      let selectedPackageId = null;
+
+      function selectPackage(id) {
+        selectedPackage = selectedPackage === id ? null : id;
+        renderPackages();
+        
+        const selectedPkg = packages.find((pkg) => pkg.id === selectedPackage);
+        if (selectedPkg) {
+          console.log("Paquete seleccionado:", selectedPkg);
+        } else {
+          console.log("No hay paquete seleccionado");
+        }
+      }
+
+         function seleccionarHora(boton) {
+                    const botones = document.querySelectorAll(".boton-hora");
+                    botones.forEach((btn) => {
+                    btn.classList.remove("bg-blue-600", "text-white");
+                    btn.classList.add("border-gray-200");
+                    });
+
+                    boton.classList.add("bg-blue-600", "text-white");
+                    boton.classList.remove("border-gray-200");
+                    document.getElementById("horaCita").value = boton.value;
+                }
+
+                function enviarFormulario(event) {
+                      event.preventDefault(); 
+
+                      const formData = new FormData(event.target); 
+
+                   
+                      const selectedPkg = packages.find((pkg) => pkg.id === selectedPackage);
+                      if (selectedPkg) {
+                          formData.append("selectedPackageId", selectedPkg.id);
+                          formData.append("selectedPackageName", selectedPkg.name);
+                          formData.append("selectedPackagePrice", selectedPkg.price);
+                      }
+
+                      
+                      const datosCliente = {
+                          nombre: formData.get("nombre"),               
+                          apellido: formData.get("apellido"),           
+                          telefono: formData.get("telefono"),           
+                          correo: formData.get("correo"),              
+                          fechaCita: formData.get("fechaCita"),         
+                          horaCita: formData.get("horaCita"),           
+                          informacionAdicional: formData.get("informacionAdicional"), 
+                          selectedPackageId: selectedPkg ? selectedPkg.id : null,
+                          selectedPackageName: selectedPkg ? selectedPkg.name : null,
+                          selectedPackagePrice: selectedPkg ? selectedPkg.price : null,
+                      };
+
+          
+                      localStorage.removeItem("datosCliente");
+
+                     
+                      localStorage.setItem("datosCliente", JSON.stringify(datosCliente));
+
+                   
+                      const botonConfirmar = event.target.querySelector('button[type="submit"]');
+                      
+                      botonConfirmar.classList.add("desactivado");
+                       botonConfirmar.textContent = "Enviando... Por favor, Espere";
+                      botonConfirmar.disabled = true;
+                      
+                      fetch("index.php", {
+                          method: "POST",
+                          body: formData,
+                      })
+                      .then((response) => response.text()) 
+                      .then((data) => {
+                         
+                        window.location.href = "index2.html"; 
+
+                        event.target.reset();
+
+                                  const botones = document.querySelectorAll(".boton-hora");
+                                  botones.forEach((btn) => {
+                                      btn.classList.remove("bg-blue-600", "text-white");
+                                      btn.classList.add("border-gray-200");
+                                  });
+
+
+                                  selectedPackage = null;
+
+
+                                  botonConfirmar.classList.remove("desactivado");
+                                  botonConfirmar.textContent = "Confirmar Cita";
+                                  botonConfirmar.disabled = false;
+                      })
+                      
+                      .catch((error) => {
+                          console.error("Error:", error);
+                          alert("Error al enviar el formulario. Por favor, intenta nuevamente."); 
+                      })
+                     
+                  }
+
+
+
+
+
+
+
+    </script>
+  </head>
+
+  <body>
+    <div
+      class="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-8 relative overflow-hidden border-t-4 border-red-500"
+    >
+      <!-- Encabezado -->
+      <div class="reservation-header">
+        <h1 id="titulo">Christmas Mini Session</h1>
+      </div>
+
+      <div id="app" style="max-width: 42rem; margin: 0 auto; padding: 1rem">
+        <h2
+          style="
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+          "
+        >
+          Select Package
+        </h2>
+        <div id="packages"></div>
+        <div class="total">
+          <span class="total-label">Total</span>
+          <span id="total-price" class="total-price">$0.00</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="office-address">
+          47 Nepperhan Avenue, Str #5, Elmsford, NY 10523<br />
+        </div>
+      </div>
+
+
+      <!-- Formulario -->
+      <form class="space-y-6" onsubmit="enviarFormulario(event)">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Nombre Completo -->
+          <div class="space-y-2">
+            <label class="block text-gray-700 font-medium" for="nombre">
+              Nombre <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              placeholder="Name"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <label class="block text-gray-700 font-medium" for="apellido">
+              Apellido <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              placeholder="Last Name"
+              required
+            />
+          </div>
+
+          <!-- Información de Contacto -->
+          <div class="space-y-2">
+            <label class="block text-gray-700 font-medium" for="telefono">
+              Teléfono <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              placeholder="(929) 595-5959"
+              required
+            />
+          </div>
+
+          <!-- E-mail -->
+          <div class="space-y-2">
+            <label class="block text-gray-700 font-medium" for="correo">
+              E-mail <span class="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+              placeholder="example@email.com"
+              required
+            />
+          </div>
+        </div>
+
+        <input type="hidden" id="horaCita" name="horaCita" value="" />
+
+        <!-- Selección de Fecha -->
+        <div class="space-y-2">
+          <label for="fechaCita" class="block text-gray-700 font-medium">
+            Fecha de Cita <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="fechaCita"
+            name="fechaCita"
+            class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+            placeholder="Seleccione una fecha"
+            required
+            readonly
+          />
+        </div>
+
+        <!-- Selección de Hora -->
+        <div class="space-y-2">
+          <label class="block text-gray-700 font-medium">
+            Hora de Cita <span class="text-red-500">*</span>
+          </label>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="9:00 AM"
+            >
+              9:00 AM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="10:00 AM"
+            >
+              10:00 AM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="11:00 AM"
+            >
+              11:00 AM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="2:00 PM"
+            >
+              1:00 PM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="2:00 PM"
+            >
+              2:00 PM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="2:00 PM"
+            >
+              3:00 PM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="2:00 PM"
+            >
+              4:00 PM
+            </button>
+            <button
+              type="button"
+              class="boton-hora p-3 border-2 border-gray-200 rounded-lg hover:bg-blue-50 transition-colors"
+              onclick="seleccionarHora(this)"
+              name="horaCita"
+              value="2:00 PM"
+            >
+              5:00 PM
+            </button>
+          </div>
+        </div>
+
+        <!-- Información Adicional -->
+        <div class="space-y-2">
+          <label class="block text-gray-700 font-medium">
+            ¿Deseas decirnos algo adicional?
+          </label>
+          <textarea
+            name="informacionAdicional"
+            class="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <!-- Botón de Envío -->
+        <button type="submit"
+          class="w-full bg-red-600 text-white py-4 rounded-lg hover:bg-red-700 transition-colors font-bold text-lg shadow-lg transform hover:scale-105 transition-transform duration-200"
+        >
+          Confirmar Cita
+        </button>
+      </form>
+
+      <!-- Aviso Importante -->
+      <div
+        class="mt-8 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-400"
+      >
+        <p class="text-sm text-gray-700">
+          <span class="font-bold text-yellow-700">¡POR FAVOR!</span> Llegar
+          puntual (a tiempo) cada 5 minutos tarde tendrá un recargo de $15
+          dólares, ya que después de ti tengo próximas sesiones,
+          <span class="font-medium text-yellow-700"
+            >por favor respeta el horario.</span
+          >
+        </p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

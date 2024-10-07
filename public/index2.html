@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-encabezado.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <title>Formulario de Cita Navideña</title>
+</head>
+
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl p-8 mt-10">
+        <!-- Encabezado -->
+        <div class="reservation-header text-center mb-6">
+            <h1 id="titulo" class="text-3xl font-bold text-gray-800">Christmas Mini Session</h1>
+            <div class="office-address text-gray-500 mt-2">
+                47 Nepperhan Avenue, Str #5, Elmsford, NY 10523
+            </div>
+        </div>
+
+        <div id="datosCliente" class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
+                <h2 class="font-bold text-2xl md:text-3xl text-white">Datos del Cliente</h2>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Nombre</span>
+                        <span id="nombreCliente" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Apellido</span>
+                        <span id="apellidoCliente" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Teléfono</span>
+                        <span id="telefonoCliente" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Correo</span>
+                        <span id="correoCliente" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Fecha de Cita</span>
+                        <span id="fechaCita" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Hora de Cita</span>
+                        <span id="horaCita" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Paquete Seleccionado</span>
+                        <span id="paqueteSeleccionado" class="text-lg font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-medium text-gray-500">Precio</span>
+                        <span class="text-lg font-semibold text-gray-800">$ <span id="precioPaquete"></span> USD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enlace de WhatsApp -->
+        <div class="mt-6 text-center">
+            <a href="https://api.whatsapp.com/send?phone=+19145647682&text=Hola, tengo una consulta sobre mi cita."
+                target="_blank"
+                class="whatsapp-button flex items-center justify-center bg-green-500 text-white font-bold rounded-full hover:bg-green-600 transition duration-300">
+                <i class="fab fa-whatsapp mr-2 whatsapp-icon"></i> Comuníquese por WhatsApp
+            </a>
+        </div>
+
+        <div class="mt-8 p-4 bg-yellow-100 rounded-lg border-l-4 border-yellow-400">
+            <p class="text-sm text-gray-700">
+                <span class="font-bold text-yellow-700">¡POR FAVOR!</span> Llegar
+                puntual (a tiempo) cada 5 minutos tarde tendrá un recargo de $15
+                dólares, ya que después de ti tengo próximas sesiones,
+                <span class="font-medium text-yellow-700">por favor respeta el horario.</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Recuperar los datos del cliente del localStorage y mostrarlos
+        document.addEventListener("DOMContentLoaded", function () {
+            const datosCliente = JSON.parse(localStorage.getItem("datosCliente"));
+
+            if (datosCliente) {
+                document.getElementById("nombreCliente").textContent = datosCliente.nombre;
+                document.getElementById("apellidoCliente").textContent = datosCliente.apellido;
+                document.getElementById("telefonoCliente").textContent = datosCliente.telefono;
+                document.getElementById("correoCliente").textContent = datosCliente.correo;
+                document.getElementById("fechaCita").textContent = datosCliente.fechaCita;
+                document.getElementById("horaCita").textContent = datosCliente.horaCita;
+                document.getElementById("paqueteSeleccionado").textContent = datosCliente.selectedPackageName || "Ninguno";
+                document.getElementById("precioPaquete").textContent = datosCliente.selectedPackagePrice || "N/A";
+                document.getElementById("informacionAdicional").textContent = datosCliente.informacionAdicional || "N/A";
+            } else {
+                document.getElementById("datosCliente").innerHTML = "<p>No hay datos del cliente disponibles.</p>";
+            }
+        });
+    </script>
+</body>
+
+</html>

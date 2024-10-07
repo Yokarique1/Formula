@@ -1,0 +1,246 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-image: url('images/background.jpg'); /* Reemplaza con la ruta de tu imagen JPG */
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    padding: 4px;
+}
+
+.whatsapp-button {
+    padding: 1rem 2rem; /* Ajusta el padding según sea necesario */
+    margin: 2rem auto; /* Margen superior e inferior */
+    border-radius: 25px;
+}
+
+.whatsapp-icon {
+    font-size: 24px; /* Aumenta el tamaño del icono */
+    width: 30px; /* Ancho del icono */
+    height: 30px; /* Alto del icono */
+}
+
+#titulo {
+    align-items: center;
+    text-align: center;
+    margin-top: 23%;
+    margin-bottom: 12%;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+.package {
+    display: flex;
+    align-items: start;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.package.selected {
+    background-color: #EBF5FF;
+    border: 2px solid #3B82F6;
+}
+
+.package:not(.selected) {
+    background-color: #F9FAFB;
+    border: 2px solid transparent;
+}
+
+.checkbox-container {
+    margin-right: 1rem;
+    /* Espacio entre el checkbox y la imagen */
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+.package img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-right: 1rem;
+}
+
+.package-info {
+    flex-grow: 1;
+}
+
+.package-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    width: 35vh;
+}
+
+.package-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.package-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2563EB;
+}
+
+.package-description {
+    font-size: 0.875rem;
+    color: #4B5563;
+}
+
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.total-label {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563EB;
+}
+
+.reservation-header {
+    background-image: url('images/imagen1.jpg'); /* Reemplaza 'background.jpg' con el nombre de tu imagen */
+    background-size: cover; /* Esto hará que la imagen cubra todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    padding: 15px; /* Añade algo de padding para que el contenido no esté pegado a los bordes */
+    color: #ffffff; /* Cambia el color del texto si es necesario para que se vea bien sobre la imagen */
+    border-radius: 10px;
+}
+
+/* Estilos adicionales para mejorar la legibilidad si es necesario */
+.reservation-header h1,
+.reservation-header p,
+.reservation-header .office-address {
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.5); /* Añade sombra al texto para mejorar la legibilidad */
+}
+
+.image-container img {
+    max-width: 100%; /* Asegura que el logo no sea más ancho que su contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+@media (max-width: 430px) {
+    .package-description {
+        margin-right: 300px !important;
+        font-size: 0.775rem;
+        color: #4B5563;
+        text-align: center;
+        align-items: center;
+    }
+    .package-header {
+        display: flex;
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+        margin-bottom: 2rem; /* Añade 3rem de margen solo abajo */
+    }
+    .package-name {
+        font-size: 1.10rem; /* Tamaño de fuente */
+        font-weight: 600; /* Peso de la fuente */
+        color: #1F2937; /* Color del texto */
+        display: block; /* Hace que el nombre ocupe toda una línea */
+        margin-bottom: 1rem; /* Añade 3rem de margen solo abajo */
+        line-height: 1.2; /* Mejora el espaciado entre líneas si el nombre es largo */
+        word-wrap: break-word; /* Permite que palabras largas se rompan y pasen a la siguiente línea */
+    }
+}
+
+@media (max-width: 932px) {
+    .package-description {
+        margin-right: 300px !important;
+        font-size: 0.175rem;
+        color: #4B5563;
+        text-align: center;
+        align-items: center;
+    }
+    .package-header {
+        display: flex;
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+        margin-bottom: 2rem; /* Añade 3rem de margen solo abajo */
+    }
+    .package-name {
+        font-size: 1.10rem; /* Tamaño de fuente */
+        font-weight: 600; /* Peso de la fuente */
+        color: #1F2937; /* Color del texto */
+        display: block; /* Hace que el nombre ocupe toda una línea */
+        margin-bottom: 1rem; /* Añade 3rem de margen solo abajo */
+        line-height: 1.2; /* Mejora el espaciado entre líneas si el nombre es largo */
+        word-wrap: break-word; /* Permite que palabras largas se rompan y pasen a la siguiente línea */
+    }
+}
+
+@media (max-width: 844px) {
+    .package-description {
+        margin-right: 50% !important;
+        font-size: 0.475rem;
+        color: #4B5563;
+        text-align: center;
+        align-items: center;
+    }
+    .package-header {
+        display: flex;
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+        margin-bottom: 2rem; /* Añade 3rem de margen solo abajo */
+        width: 30vh;
+    }
+    .package-name {
+        font-size: 1.10rem; /* Tamaño de fuente */
+        font-weight: 600; /* Peso de la fuente */
+        color: #1F2937; /* Color del texto */
+        display: block; /* Hace que el nombre ocupe toda una línea */
+        margin-bottom: 1rem; /* Añade 3rem de margen solo abajo */
+        line-height: 1.2; /* Mejora el espaciado entre líneas si el nombre es largo */
+        word-wrap: break-word; /* Permite que palabras largas se rompan y pasen a la siguiente línea */
+    }
+}
+
+@media (max-width: 1024px) {
+    .package-description {
+        font-size: 0.875rem;
+        color: #4B5563;
+        text-align: center;
+        align-items: center;
+    }
+    .package-header {
+        display: flex;
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+        margin-bottom: 2rem; /* Añade 3rem de margen solo abajo */
+    }
+    .package-name {
+        font-size: 1.10rem; /* Tamaño de fuente */
+        font-weight: 600; /* Peso de la fuente */
+        color: #1F2937; /* Color del texto */
+        display: block; /* Hace que el nombre ocupe toda una línea */
+        margin-bottom: 1rem; /* Añade 3rem de margen solo abajo */
+        line-height: 1.2; /* Mejora el espaciado entre líneas si el nombre es largo */
+        word-wrap: break-word; /* Permite que palabras largas se rompan y pasen a la siguiente línea */
+    }
+}
